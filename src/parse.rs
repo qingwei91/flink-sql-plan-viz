@@ -47,20 +47,20 @@ pub enum Expression {
 
 #[derive(Debug, PartialEq)]
 pub struct Operator {
-    name: String,
-    attributes: HashMap<String, Expression>,
-    children: Vec<Box<Operator>>,
+    pub name: String,
+    pub attributes: HashMap<String, Expression>,
+    pub children: Vec<Box<Operator>>,
 }
 
 #[derive(Debug, PartialEq)]
 pub struct QueryPlan {
-    section: Section,
-    operators: Vec<Operator>,
+    pub section: Section,
+    pub operators: Vec<Operator>,
 }
 
 #[derive(Debug, PartialEq)]
 pub struct QueryPlans {
-    plans: Vec<QueryPlan>,
+    pub plans: Vec<QueryPlan>,
 }
 fn parse_identifier(input: &str) -> Res<&str, &str> {
     let (input, id) = take_while1(|c: char| c.is_alphanumeric() || c == '_')(input)?;
