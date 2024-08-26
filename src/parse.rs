@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt::{Display, Formatter};
 use nom::branch::alt;
 use nom::bytes::complete::{tag, take_until, take_while, take_while1};
 use nom::character::complete::{alpha1, char, digit1, line_ending, multispace0, space0};
@@ -44,6 +45,7 @@ pub enum Expression {
     },
     Unknown(String),
 }
+
 
 #[derive(Debug, PartialEq)]
 pub struct Operator {
