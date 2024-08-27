@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Query Plan Viewer</title>
+    <link rel="stylesheet" href="/flink-sql-plan-viz/style-1aef05dead34ffbb.css" integrity="sha384&#x2D;&#x2B;P9seG5AwL5qIRTpJmYhoJXXsJRE0b0aDxcW0yzHCjbq&#x2B;MI4605wZvA9ONCLoxSd"/>
+
+<link rel="modulepreload" href="/flink-sql-plan-viz/calcite-viz-16b2cbb7022ccb3.js" crossorigin=anonymous integrity="sha384-yhYNohYF8BGgMALhDgO2spuqj6d7HfiSbZ1mcxGp8e6xeqmVtY7s4zI4dpEf+k5V">
+<link rel="preload" href="/flink-sql-plan-viz/calcite-viz-16b2cbb7022ccb3_bg.wasm" crossorigin=anonymous integrity="sha384-MErNTLYFCYKv2B4hqeKIbVrjiu/zDrV8ZD8PXA5LNDppeAKV5qCgOyjGoLnrV5Rc" as="fetch" type="application/wasm"></head>
+<body>
+
+<script type="module" nonce="KA1kJVhx6P4uwluQEWpUEw==">
+import init, * as bindings from '/flink-sql-plan-viz/calcite-viz-16b2cbb7022ccb3.js';
+const wasm = await init('/flink-sql-plan-viz/calcite-viz-16b2cbb7022ccb3_bg.wasm');
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script></body>
+</html>
+
