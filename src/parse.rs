@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::fmt::{Display, Formatter};
+use std::fmt::{Debug, Display, Formatter};
 use nom::branch::alt;
 use nom::bytes::complete::{tag, take_until, take_while, take_while1};
 use nom::character::complete::{alpha1, char, digit1, line_ending, multispace0, space0};
@@ -46,6 +46,17 @@ pub enum Expression {
     Unknown(String),
 }
 
+impl Display for Expression {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Expression::Unknown(x) => {
+                write!(f, "{}", x)
+            }
+            _ => todo!()
+            // _ => Display::fmt(self, f)
+        }
+    }
+}
 
 #[derive(Debug, PartialEq)]
 pub struct Operator {
@@ -235,14 +246,14 @@ fn parse_binding() -> impl Fn(&str) -> Res<&str, Expression> {
     // order matters! as these are all greedy consumption and will happily return whatever they can parse
     let (i, r) = alt((
         parse_until_unbalanced_bracket,
-        parse_fqname(),
-        parse_cast_expression,
-        parse_hash_dist,
-        parse_bi_op(),
-        parse_type_lit(),
-        parse_projection,
-        parse_binding(),
-        parse_number, // not a good way, we should have some sort of tokenization
+        // parse_fqname(),
+        // parse_cast_expression,
+        // parse_hash_dist,
+        // parse_bi_op(),
+        // parse_type_lit(),
+        // parse_projection,
+        // parse_binding(),
+        // parse_number, // not a good way, we should have some sort of tokenization
     ))(input)?;
     Ok((i, r))
 }

@@ -30,8 +30,15 @@ fn render_operator(operator: &Operator) -> Html {
         <Collapsible title={operator.name.clone()} class="operator">
             <div class="attributes">
                 { for operator.attributes.iter().sorted_by_key(|x|x.0)
-                    .map(|(k, v)| html! {
-                    <span>{ format!("{}: {:?} ", k, v) }</span>
+                    .enumerate()
+                    .map(|(idx, (k, v))| html! {
+                    <span>{
+                        if idx == 0 {
+                            format!("{}=[{}]", k, v)
+                        } else {
+                            format!(", {}=[{}]", k, v)
+                        }
+                    }</span>
                 }) }
             </div>
             { for operator.children.iter().map(|bo|render_operator(bo)) }
@@ -99,7 +106,9 @@ Join(joinType=[InnerJoin], where=[(account_id = account_id0)], select=[account_i
       +- TableSourceScan(table=[[default_catalog, default_database, transactions, watermark=[-(transaction_time, 5000:INTERVAL SECOND)]]], fields=[account_id, amount, transaction_time])
 ";
 
-    let query_plans = use_state(|| QueryPlans { plans: vec![] });
+    let (_, init_plan) = parse::parse_query_plan(input).unwrap();
+
+    let query_plans = use_state(|| init_plan);
     let parse_err = use_state(String::new); // why Option never work
     let input_text = use_state(|| input.to_string());
 
@@ -130,15 +139,15 @@ Join(joinType=[InnerJoin], where=[(account_id = account_id0)], select=[account_i
 
     html! {
         <div style="display: flex;">
-            <div style="width: 50%; padding: 10px;">
+            <div style="width: 50%; max-width: 70%; padding: 10px;">
                 <textarea
                     value={(*input_text).clone()}
                     oninput={oninput}
-                    style="width: 100%; height: 500px;"
+                    style="width: 100%; height: 500px; max-width: 100%;"
                     placeholder="Enter your query plan here..."
                 />
             </div>
-            <div style="width: 50%; padding: 10px; overflow-y: auto; height: 90%;">
+            <div style="padding: 10px; overflow-y: auto; height: 90%;">
                 <h1>{"Query Plans Viewer"}</h1>
                 { render_query_plans(&query_plans) }
                 if !parse_err.is_empty() {
