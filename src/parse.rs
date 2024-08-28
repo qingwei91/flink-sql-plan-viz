@@ -16,6 +16,7 @@ pub enum Section {
     AbstractSyntaxTree,
     OptimizedPhysicalPlan,
     OptimizedExecutionPlan,
+    UnknownSection(String),
 }
 #[derive(Debug, PartialEq)]
 pub enum Expression {
@@ -275,10 +276,8 @@ fn parse_section(input: &str) -> Res<&str, Section> {
         "Abstract Syntax Tree" => Section::AbstractSyntaxTree,
         "Optimized Physical Plan" => Section::OptimizedPhysicalPlan,
         "Optimized Execution Plan" => Section::OptimizedExecutionPlan,
-        _ => {
-            return Err(nom::Err::Error(VerboseError {
-                errors: vec![(content, VerboseErrorKind::Context("Section not found"))],
-            }))
+        s => {
+            Section::UnknownSection(s.to_string())
         }
     };
 

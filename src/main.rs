@@ -139,11 +139,11 @@ Join(joinType=[InnerJoin], where=[(account_id = account_id0)], select=[account_i
 
     html! {
         <div style="display: flex;">
-            <div style="width: 50%; max-width: 70%; padding: 10px;">
+            <div style="width: 50%; max-width: 100%; padding: 10px;">
                 <textarea
                     value={(*input_text).clone()}
                     oninput={oninput}
-                    style="width: 100%; height: 500px; max-width: 100%;"
+                    style="width: 100%; height: 90vh; position: sticky; top: 20px;"
                     placeholder="Enter your query plan here..."
                 />
             </div>
