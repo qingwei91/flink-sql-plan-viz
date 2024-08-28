@@ -76,7 +76,7 @@ pub struct QueryPlans {
     pub plans: Vec<QueryPlan>,
 }
 fn parse_identifier(input: &str) -> Res<&str, &str> {
-    let (input, id) = take_while1(|c: char| c.is_alphanumeric() || c == '_')(input)?;
+    let (input, id) = take_while1(|c: char| c.is_alphanumeric() || c == '_' || c == '#')(input)?;
     Ok((input, id))
 }
 
