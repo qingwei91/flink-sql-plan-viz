@@ -80,9 +80,13 @@ fn parse_identifier(input: &str) -> Res<&str, &str> {
     Ok((input, id))
 }
 
+fn parse_attr_key(input: &str) -> Res<&str, &str> {
+    take_until("=")(input)
+}
+
 fn parse_attribute(input: &str) -> Res<&str, (String, Expression)> {
     let (input, (k, v)) = separated_pair(
-        parse_identifier,
+        parse_attr_key,
         tag("="),
         delimited(tag("["), parse_expression, tag("]")),
     )(input)?;
